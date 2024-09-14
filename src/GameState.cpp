@@ -5,27 +5,27 @@ GameState GameState::mGameState;
 void GameState::InitState()
 {
     //Init Sound
-	reserve_voices (16, -1);    
-	if (install_sound (DIGI_AUTODETECT, MIDI_NONE, NULL) < 0)
-	{
-		printf ("Error initializing sound card");
-		exit(0);
-	}
+    reserve_voices (16, -1);    
+    if (install_sound (DIGI_AUTODETECT, MIDI_NONE, NULL) < 0)
+    {
+        printf ("Error initializing sound card");
+        exit(0);
+    }
 
     if (install_mod (8) < 0) 
-	{
-		printf ("Error setting digi voices");
-		exit(0);
-	}
+    {
+        printf ("Error setting digi voices");
+        exit(0);
+    }
 
-	JGMOD *ex;
-	char modPath[] = ".\\OTHER\\tetris.mod";
-	ex = load_mod (modPath);     
+    JGMOD *ex;
+    char modPath[] = ".\\OTHER\\tetris.mod";
+    ex = load_mod (modPath);     
     if (ex == NULL)
-	{
-		printf ("Error reading tetris.mod");
-		exit(0);
-	}    
+    {
+        printf ("Error reading tetris.mod");
+        exit(0);
+    }    
     
     GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
