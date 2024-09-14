@@ -27,7 +27,7 @@ void GameState::InitState()
 		exit(0);
 	}    
     
-    GAME_FONT = load_font(".\\OTHER\\BitScrip.bmp", palette, NULL);
+    GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     BACKGROUND = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     clear_to_color(BACKGROUND, makecol(0,0,0));
@@ -36,20 +36,20 @@ void GameState::InitState()
     DrawBackground();
 
     //Statistics Header
-    textout_centre_ex(BACKGROUND, GAME_FONT, "STATISTICS", 50, 6, makecol(255, 255, 255), -1);
+    textout_centre_ex(BACKGROUND, GAME_FONT, "STATISTICS", 50, 8, makecol(255, 255, 255), -1);
 
     //Lines Header
-    textout_centre_ex(BACKGROUND, GAME_FONT, "Lines ", 132, 6, makecol(255, 255, 255), -1);
+    textout_centre_ex(BACKGROUND, GAME_FONT, "Lines ", 170, 8, makecol(255, 255, 255), -1);
 
     //Level Header
-    textout_ex(BACKGROUND, GAME_FONT, "Level", 262, 8, makecol(255, 255, 255), -1);
+    textout_ex(BACKGROUND, GAME_FONT, "Level", 262, 12, makecol(255, 255, 255), -1);
 
     //Next Block Header
-    textout_centre_ex(BACKGROUND, GAME_FONT, "Next", 285, 38, makecol(255, 255, 255), -1);
+    textout_centre_ex(BACKGROUND, GAME_FONT, "Next", 288, 38, makecol(255, 255, 255), -1);
 
     //Score Headers
-    textout_ex(BACKGROUND, GAME_FONT, "TOP", 262, 108, makecol(255, 255, 255), -1);    
-    textout_ex(BACKGROUND, GAME_FONT, "SCORE", 262, 128, makecol(255, 255, 255), -1); 
+    textout_ex(BACKGROUND, GAME_FONT, "TOP", 262, 110, makecol(255, 255, 255), -1);    
+    textout_ex(BACKGROUND, GAME_FONT, "SCORE", 262, 130, makecol(255, 255, 255), -1); 
 
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
@@ -104,7 +104,7 @@ void GameState::ProcessInput(GameProcessor* game)
 void GameState::Render(GameProcessor* game)
 {
     //Lines
-    textout_ex(BUFFER, GAME_FONT, formatInteger(3, currentLines).c_str(), 152, 6, makecol(255, 255, 255), -1);
+    textout_ex(BUFFER, GAME_FONT, formatInteger(3, currentLines).c_str(), 186, 8, makecol(255, 255, 255), -1);
 
     //Statistics
     textout_ex(BUFFER, GAME_FONT, formatInteger(3, tetronimoTally[0]).c_str(), 56, 24, makecol(255, 255, 255), -1);
@@ -116,11 +116,11 @@ void GameState::Render(GameProcessor* game)
     textout_ex(BUFFER, GAME_FONT, formatInteger(3, tetronimoTally[0]).c_str(), 56, 168, makecol(255, 255, 255), -1);
 
     //Current Level    
-    textout_ex(BUFFER, GAME_FONT, formatInteger(2, currentLevel).c_str(), 303, 8, makecol(255, 255, 255), -1);
+    textout_ex(BUFFER, GAME_FONT, formatInteger(2, currentLevel).c_str(), 303, 12, makecol(255, 255, 255), -1);
 
     //Scores
-    textout_ex(BUFFER, GAME_FONT, formatInteger(6, topScore).c_str(), 262, 116, makecol(255, 255, 255), -1);  
-    textout_ex(BUFFER, GAME_FONT, formatInteger(6, currentScore).c_str(), 262, 136, makecol(255, 255, 255), -1); 
+    textout_ex(BUFFER, GAME_FONT, formatInteger(6, topScore).c_str(), 262, 118, makecol(255, 255, 255), -1);  
+    textout_ex(BUFFER, GAME_FONT, formatInteger(6, currentScore).c_str(), 262, 138, makecol(255, 255, 255), -1); 
 
     draw_sprite(screen, BUFFER, 0, 0);
 }
