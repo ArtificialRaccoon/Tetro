@@ -23,12 +23,12 @@ int main()
     install_int_ex(timer, BPS_TO_TIMER(60));
 
     objGame.ChangeState(GameState::Instance());
-	while ( true )
-	{
-	    while(ticks == 0)
+    while ( true )
+    {
+        while(ticks == 0)
             rest(1);
 
-	    while(ticks > 0)
+        while(ticks > 0)
         {
             int old_ticks = ticks;
 
@@ -41,6 +41,6 @@ int main()
         }
 
         objGame.Render();
-	}
+    }
     return 0;
 }
