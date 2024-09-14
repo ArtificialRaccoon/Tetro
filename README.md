@@ -2,7 +2,7 @@
 
 ![Untitled](https://github.com/ArtificialRaccoon/Tetris/blob/main/Screenshot.png)
 
-A very simply tetris clone for DOS using Allegro, GCC, and JGMod.  Currently only slapped the UI and basic state system togeather; will get to the rest later.
+A very simple tetris clone for DOS using Allegro, GCC, and JGMod.  Currently only slapped the UI and basic state system togeather; will get to the rest later.
 
 Currently runs on hardware and DOSBOX without issue (for now).  
 
