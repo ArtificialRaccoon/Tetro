@@ -107,12 +107,15 @@ void GameState::AquireInput(GameProcessor* game)
 
 void GameState::ProcessInput(GameProcessor* game)
 { 
+    if(context.ShouldDrop())
+        context.GetCurrentPiece().Down(context.PlayGrid());
+
     if(context.GetCurrentPiece().ShouldLock(context.PlayGrid()))
     {
         context.IncreaseTetrominoTally(context.GetCurrentPiece().GetType());
         context.GetCurrentPiece().LockPiece(context.PlayGrid());
         context.CheckForCompletedLines();
-        context.SpawnTetromino();
+        context.SpawnTetromino();        
     }
 }
 

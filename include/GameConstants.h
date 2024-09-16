@@ -1,6 +1,7 @@
 #ifndef GAMECONSTANTS_H
 #define GAMECONSTANTS_H
 
+const int framesBeforeDrop[20] = { 48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 2, 1 };
 const int blockSize = 8;
 const int playGridWidth = 10;
 const int playGridHeight = 20;

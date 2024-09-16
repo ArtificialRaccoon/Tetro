@@ -25,6 +25,7 @@ GameContext::GameContext()
 
 void GameContext::SpawnTetromino()
 {
+    this->dropCounter = 0;
     currentPiece = Tetromino(nextPiece.GetType());
     nextPiece = Tetromino(GetRandomTetromino());
 }
@@ -148,4 +149,16 @@ void GameContext::RemoveCompletedLine(int rowPosition)
     {
         playGrid[0][x] = 0;
     }
+}
+
+bool GameContext::ShouldDrop()
+{
+    this->dropCounter++;    
+    int frameCountBeforeDrop = framesBeforeDrop[this->currentLevel > 19 ? 19 : this->currentLevel];
+    if(this->dropCounter >= frameCountBeforeDrop)
+    {
+        this->dropCounter = 0;
+        return true;
+    }
+    return false;
 }

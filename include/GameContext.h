@@ -8,6 +8,7 @@ class GameContext
 {
     public: //Functions
         GameContext();
+        bool ShouldDrop();
         void SpawnTetromino();
         void CheckForCompletedLines();
         void RemoveCompletedLine(int rowPosition);
@@ -40,7 +41,7 @@ class GameContext
         bool TetrominoTallyChanged(int type) { return tetrominoTallyChanged[type]; }
 
     private: //Functions
-        int GetRandomTetromino();
+        int GetRandomTetromino();        
 
     private: //Context
         bool useSevenBag = true; //Later, add an option to switch randomization
@@ -49,6 +50,7 @@ class GameContext
         int currentLevel = 1;        
         int currentLines = 0;
         int historyIndex = 0;
+        int dropCounter = 0;
         int tetrominoTally[7] = {0,0,0,0,0,0,0};
         int** playGrid = new int*[playGridHeight];
         Tetromino nextPiece;
