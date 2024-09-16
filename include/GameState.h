@@ -6,6 +6,11 @@
 #include <memory>
 #include <fstream>
 #include <cmath>
+#include <cstdlib> 
+#include <ctime>
+#include "GameContext.h"
+#include "GameConstants.h"
+#include "Tetromino.h"
 #include "BaseState.h"
 #include "allegro.h"
 #include "json.h"
@@ -26,33 +31,22 @@ class GameState : public BaseState
 
     protected:
         GameState() { }
-        void DrawBackground();
+        void DrawBackground();        
         std::string formatInteger(int leadingZeros, int value);
-    private: //Variables
-        int ticks;        
-        int currentLevel = 1;
-        int currentScore = 0;
-        int topScore = 0;
-        int currentLines = 0;
-        int tetronimoTally[7] = {0,0,0,0,0,0,0};
+        GameContext context;
+
+    private: //Variables       
         static GameState mGameState;
+        std::vector<int> tileData;                    
+
+    private: //Bitmaps
         BITMAP *BUFFER;
         BITMAP *BACKGROUND;
+        BITMAP *NEXTWINDOW;
+        BITMAP *PLAYGRID;
         BITMAP *GAMEUI;
         FONT *GAME_FONT;
         PALETTE palette;
-        std::vector<int> tileData;
-
-    private: //Constants
-        const int tilesetWidth = 16;
-        const int tilesetHeight = 8;
-        const int tileWidth = 8;
-        const int tileHeight = 8;
-        const int backgroundWidth = 40;
-        const int backgroundHeight = 25;
-        const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
-        const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
-        const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
 };
 
 #endif // GAMESTATE_H

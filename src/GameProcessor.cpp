@@ -19,10 +19,7 @@ void GameProcessor::InitializeGame()
 
 void GameProcessor::HandleEvents() { states.back()->ProcessInput(this); }
 
-void GameProcessor::ProcessEvents() 
-{
-	states.back()->AquireInput(this);
-}
+void GameProcessor::ProcessEvents()  { states.back()->AquireInput(this); }
 
 void GameProcessor::Render() { states.back()->Render(this); }
 
