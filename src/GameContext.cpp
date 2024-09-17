@@ -125,21 +125,15 @@ void GameContext::CheckForCompletedLines(SAMPLE* points)
     {
         case 1:
             SetCurrentScore(100);
-            pause_mod();
             play_sample(points, 255, 128, 1000, FALSE);
-            resume_mod();
             break;
         case 2:
             SetCurrentScore(300);
-            pause_mod();
             play_sample(points, 255, 128, 1000, FALSE);
-            resume_mod();
             break;
         case 3:
             SetCurrentScore(500);
-            pause_mod();
             play_sample(points, 255, 128, 1000, FALSE);
-            resume_mod();
             break;
         case 4:
             SetCurrentScore(1000);            

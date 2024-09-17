@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "allegro.h"
-#include "JGMOD.h"
 #include "Tetromino.h"
 
 class GameContext

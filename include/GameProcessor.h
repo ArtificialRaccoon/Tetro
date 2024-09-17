@@ -5,7 +5,6 @@
 #include <iostream>
 #include "allegro.h"
 #include "GameUIDefines.h"
-#include "jgmod.h"
 
 using namespace std;
 

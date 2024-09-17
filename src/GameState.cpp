@@ -5,27 +5,12 @@ GameState GameState::mGameState;
 void GameState::InitState()
 {
     //Init Sound
-    reserve_voices (16, -1);    
-    if (install_sound (DIGI_AUTODETECT, MIDI_NONE, NULL) < 0)
+    reserve_voices (4, -1);    
+    if (install_sound (DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) < 0)
     {
         printf ("Error initializing sound card");
         exit(0);
     }
-
-    if (install_mod (8) < 0) 
-    {
-        printf ("Error setting digi voices");
-        exit(0);
-    }
-
-    JGMOD *ex;
-    char modPath[] = ".\\OTHER\\tetris.mod";
-    ex = load_mod (modPath);     
-    if (ex == NULL)
-    {
-        printf ("Error reading tetris.mod");
-        exit(0);
-    }    
 
     GAMEOVER = load_sample(".\\SFX\\GAMEOVER.WAV");
     POINTS = load_sample(".\\SFX\\CLEAR.WAV");
@@ -62,9 +47,9 @@ void GameState::InitState()
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
     //Play Soundtrack
-    //Note: MOD playback is too intense for a 386/40,
-    //Maybe play a midi on low end systems instead
-    play_mod (ex, TRUE);
+    MIDI *music;
+    music = load_midi(".\\OTHER\\TETRIS.MID");
+    play_midi(music, TRUE);
 }
 
 void GameState::Pause()
@@ -125,7 +110,7 @@ void GameState::ProcessInput(GameProcessor* game)
             context.SpawnTetromino();
         else
         {
-            stop_mod();
+            stop_midi();
             play_sample(GAMEOVER, 255, 128, 1000, FALSE);
             game->ChangeState(GameOverState::Instance());
         }
