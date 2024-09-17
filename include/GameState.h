@@ -11,6 +11,7 @@
 #include "GameContext.h"
 #include "GameConstants.h"
 #include "Tetromino.h"
+#include "GameOverState.h"
 #include "BaseState.h"
 #include "allegro.h"
 #include "json.h"
@@ -47,6 +48,10 @@ class GameState : public BaseState
         BITMAP *GAMEUI;
         FONT *GAME_FONT;
         PALETTE palette;
+    
+    private: //Sound Effects
+        SAMPLE* GAMEOVER;
+        SAMPLE* POINTS;
 };
 
 #endif // GAMESTATE_H

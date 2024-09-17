@@ -3,13 +3,13 @@
 Tetromino::Tetromino(int type) 
 {
     this->Type = type;
-    x = playGridWidth / 2 - 2;
-    y = 0;
-    rotation = 0;
+    this->x = playGridWidth / 2 - 2;
+    this->y = 0;
+    this->rotation = 0;
 
     for (int i = 0; i < 4; i++) 
     { 
-        shape[i] = tetrominoes[this->Type][i]; 
+        this->shape[i] = this->tetrominoes[this->Type][i]; 
     }
 }
 
@@ -23,9 +23,9 @@ void Tetromino::Draw(BITMAP* BUFFER, BITMAP* TILESET, bool preview)
     {
         for (int j = 0; j < 4; j++) 
         {
-            if (shape[rotation] & (0x8000 >> (i * 4 + j))) 
+            if (this->shape[rotation] & (0x8000 >> (i * 4 + j))) 
             {
-                DrawBlock(BUFFER, TILESET, xPos + j, y + i);                
+                DrawBlock(BUFFER, TILESET, xPos + j, this->y + i);                
             }
         }
     }
@@ -40,7 +40,7 @@ bool Tetromino::CanMove(int** playGrid, int newX, int newY)
 {
     for (int i = 0; i < 16; i++) 
     {
-        if (shape[rotation] & (0x8000 >> i)) 
+        if (this->shape[rotation] & (0x8000 >> i)) 
         {
             int localX = i % 4;
             int localY = i / 4;
@@ -61,12 +61,12 @@ bool Tetromino::CanRotate(int** playGrid, int nextRotation)
 {
     for (int i = 0; i < 16; i++) 
     {
-        if (shape[nextRotation] & (0x8000 >> i)) 
+        if (this->shape[nextRotation] & (0x8000 >> i)) 
         {
             int localX = i % 4;
             int localY = i / 4;
-            int finalX = x + localX;
-            int finalY = y + localY;
+            int finalX = this->x + localX;
+            int finalY = this->y + localY;
 
             if (finalX < 0 || finalX >= playGridWidth || finalY < 0 || finalY >= playGridHeight)
                 return false;
@@ -82,7 +82,7 @@ void Tetromino::LockPiece(int** playGrid)
 {
     for (int i = 0; i < 16; i++)
     {
-        if (shape[rotation] & (0x8000 >> i)) 
+        if (this->shape[rotation] & (0x8000 >> i)) 
         {
             int localX = i % 4;
             int localY = i / 4;
@@ -93,4 +93,22 @@ void Tetromino::LockPiece(int** playGrid)
                 playGrid[finalY][finalX] = this->Type + 1;
         }
     }
+}
+
+bool Tetromino::CanSpawn(int** playGrid)
+{
+    for (int i = 0; i < 16; i++)
+    {
+        if (this->shape[rotation] & (0x8000 >> i)) 
+        {
+            int localX = i % 4;
+            int localY = i / 4;
+            int finalX = this->x + localX;
+            int finalY = this->y + localY;
+
+            if (playGrid[finalY][finalX] != 0) 
+                return false;
+        }
+    }
+    return true;
 }

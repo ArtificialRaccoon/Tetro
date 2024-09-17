@@ -11,7 +11,8 @@ class Tetromino
         Tetromino(int type);
         void Draw(BITMAP* BUFFER, BITMAP* tileset, bool preview = false);
         void LockPiece(int** playGrid);
-
+        bool CanSpawn(int** playGrid);
+        
     public: //Movement Handlers
         void Left(int** playGrid) 
         {

@@ -2,6 +2,8 @@
 #define GAMECONTEXT_H
 
 #include <vector>
+#include "allegro.h"
+#include "JGMOD.h"
 #include "Tetromino.h"
 
 class GameContext
@@ -9,8 +11,9 @@ class GameContext
     public: //Functions
         GameContext();
         bool ShouldDrop();
-        void SpawnTetromino();
-        void CheckForCompletedLines();
+        bool CanSpawn();
+        void SpawnTetromino();        
+        void CheckForCompletedLines(SAMPLE* points);
         void RemoveCompletedLine(int rowPosition);
 
     public: //Setters

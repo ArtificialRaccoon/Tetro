@@ -23,6 +23,11 @@ GameContext::GameContext()
     this->nextPiece = Tetromino(GetRandomTetromino());
 }
 
+bool GameContext::CanSpawn()
+{
+    return nextPiece.CanSpawn(playGrid);
+}
+
 void GameContext::SpawnTetromino()
 {
     this->dropCounter = 0;
@@ -92,7 +97,7 @@ void GameContext::SetCurrentScore(int input)
         SetTopScore(currentScore);
 }
 
-void GameContext::CheckForCompletedLines()
+void GameContext::CheckForCompletedLines(SAMPLE* points)
 {
     int completedLineCount = 0;
 
@@ -120,12 +125,21 @@ void GameContext::CheckForCompletedLines()
     {
         case 1:
             SetCurrentScore(100);
+            pause_mod();
+            play_sample(points, 255, 128, 1000, FALSE);
+            resume_mod();
             break;
         case 2:
             SetCurrentScore(300);
+            pause_mod();
+            play_sample(points, 255, 128, 1000, FALSE);
+            resume_mod();
             break;
         case 3:
             SetCurrentScore(500);
+            pause_mod();
+            play_sample(points, 255, 128, 1000, FALSE);
+            resume_mod();
             break;
         case 4:
             SetCurrentScore(1000);            

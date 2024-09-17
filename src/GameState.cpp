@@ -26,7 +26,10 @@ void GameState::InitState()
         printf ("Error reading tetris.mod");
         exit(0);
     }    
-    
+
+    GAMEOVER = load_sample(".\\SFX\\GAMEOVER.WAV");
+    POINTS = load_sample(".\\SFX\\CLEAR.WAV");
+
     GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
     BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     BACKGROUND = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -59,6 +62,8 @@ void GameState::InitState()
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
     //Play Soundtrack
+    //Note: MOD playback is too intense for a 386/40,
+    //Maybe play a midi on low end systems instead
     play_mod (ex, TRUE);
 }
 
@@ -114,8 +119,16 @@ void GameState::ProcessInput(GameProcessor* game)
     {
         context.IncreaseTetrominoTally(context.GetCurrentPiece().GetType());
         context.GetCurrentPiece().LockPiece(context.PlayGrid());
-        context.CheckForCompletedLines();
-        context.SpawnTetromino();        
+        context.CheckForCompletedLines(POINTS);
+        
+        if(context.CanSpawn())
+            context.SpawnTetromino();
+        else
+        {
+            stop_mod();
+            play_sample(GAMEOVER, 255, 128, 1000, FALSE);
+            game->ChangeState(GameOverState::Instance());
+        }
     }
 }
 
