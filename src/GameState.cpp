@@ -191,7 +191,7 @@ void GameState::DrawBackground()
     std::ifstream ifs(".\\GFX\\GAMEUI.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     json::jobject guiJson = json::jobject::parse(content);  
-    this->tileData = guiJson["data"];
+    this->tileData = guiJson["background"];
 
     int destXPos = 0;
     int destYPos = 0;
