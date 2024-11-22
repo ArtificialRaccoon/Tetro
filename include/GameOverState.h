@@ -1,6 +1,7 @@
 #ifndef GAMEOVERSTATE_H
 #define GAMEOVERSTATE_H
 
+#include "allegro.h"
 #include "GameConstants.h"
 #include "BaseState.h"
 
@@ -19,7 +20,7 @@ class GameOverState : public BaseState
         }
 
     protected:
-        GameOverState() { }          
+        GameOverState() { } 
 
     private: //Variables       
         static GameOverState mGameOverState;

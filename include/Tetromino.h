@@ -8,55 +8,66 @@ class Tetromino
 {
     public: //Functions
         Tetromino() {};
-        Tetromino(int type);
+        Tetromino(int type);        
         void Draw(BITMAP* BUFFER, BITMAP* tileset, bool preview = false);
         void LockPiece(int** playGrid);
         bool CanSpawn(int** playGrid);
-        
+        bool CanLock(int** playGrid); 
+
     public: //Movement Handlers
         void Left(int** playGrid) 
         {
-            if(CanMove(playGrid, x - 1, y)) 
+            if(CanMove(playGrid, x - 1, y))
+            {
                 x--; 
+                ResetTimer();
+            }
         }
 
         void Right(int** playGrid)
         {
-            if(CanMove(playGrid, x + 1, y)) 
+            if(CanMove(playGrid, x + 1, y))
+            {
                 x++; 
+                ResetTimer();
+            }
         }
 
         void Down(int** playGrid)
         {
             if (CanMove(playGrid, x, y + 1))
+            {
                 y++;
+                ResetTimer();
+            }
         }
 
         void HardDrop(int** playGrid)
         {
             while (CanMove(playGrid, x, y + 1)) { y++; }
+            lockTimer = lockTimerMax;
         }
 
         void Rotate(int** playGrid)
         {
             if(CanRotate(playGrid, (rotation + 1) % 4))
+            {
                 rotation = (rotation + 1) % 4; 
+                ResetTimer();
+            }
         }
-        
-        bool ShouldLock(int** playGrid)
-        {
-            return !CanMove(playGrid, x, y + 1);
-        } 
 
     public: //Getters
         int GetType() { return this->Type; }
 
     private:
+        void ResetTimer() { lockTimer = 0; }
         void DrawBlock(BITMAP* BUFFER, BITMAP* TILESET, int x, int y);
         bool CanMove(int** playGrid, int x, int y);
         bool CanRotate(int** playGrid, int nextRotation);
 
     private:
+        int lockTimer = 0;        
         int shape[4];
         int x;
         int y;
@@ -72,6 +83,9 @@ class Tetromino
             {0x0C60, 0x4C80, 0xC600, 0x2640},  // Z 5
             {0x0E40, 0x4C40, 0x4E00, 0x4640}   // T 6
         };
+
+    private:
+        int lockTimerMax = 30;
 };
 
 

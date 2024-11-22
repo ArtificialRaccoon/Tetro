@@ -93,6 +93,7 @@ void Tetromino::LockPiece(int** playGrid)
                 playGrid[finalY][finalX] = this->Type + 1;
         }
     }
+    lockTimer = 0;
 }
 
 bool Tetromino::CanSpawn(int** playGrid)
@@ -111,4 +112,17 @@ bool Tetromino::CanSpawn(int** playGrid)
         }
     }
     return true;
+}
+
+bool Tetromino::CanLock(int** playGrid) 
+{
+    if (!CanMove(playGrid, this->x, this->y + 1))
+    {
+        lockTimer++;
+        if (lockTimer >= lockTimerMax) 
+            return true;
+    } 
+    else 
+        lockTimer = 0;
+    return false;
 }

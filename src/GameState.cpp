@@ -49,7 +49,7 @@ void GameState::InitState()
     //Play Soundtrack
     MIDI *music;
     music = load_midi(".\\OTHER\\TETRIS.MID");
-    play_midi(music, TRUE);
+    play_looped_midi(music, 25, 100);
 }
 
 void GameState::Pause()
@@ -97,21 +97,25 @@ void GameState::AquireInput(GameProcessor* game)
 
 void GameState::ProcessInput(GameProcessor* game)
 { 
-    if(context.ShouldDrop())
+    if (context.ShouldDrop())
         context.GetCurrentPiece().Down(context.PlayGrid());
 
-    if(context.GetCurrentPiece().ShouldLock(context.PlayGrid()))
+    if (context.GetCurrentPiece().CanLock(context.PlayGrid())) 
     {
         context.IncreaseTetrominoTally(context.GetCurrentPiece().GetType());
         context.GetCurrentPiece().LockPiece(context.PlayGrid());
         context.CheckForCompletedLines(POINTS);
         
-        if(context.CanSpawn())
+        if (context.CanSpawn())
             context.SpawnTetromino();
         else
         {
             stop_midi();
             play_sample(GAMEOVER, 255, 128, 1000, FALSE);
+
+            // Show the player HOW they lost
+            context.SpawnTetromino();
+            Render(game);
             game->ChangeState(GameOverState::Instance());
         }
     }
