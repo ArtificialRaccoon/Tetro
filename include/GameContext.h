@@ -1,20 +1,29 @@
 #ifndef GAMECONTEXT_H
 #define GAMECONTEXT_H
 
+#include <fstream>
 #include <vector>
+#include "json.h"
 #include "allegro.h"
 #include "Tetromino.h"
 
 class GameContext
 {
+    public:
+        static GameContext* Instance()
+        {
+            static GameContext instance;
+            return &instance;
+        }
+
     public: //Functions
-        GameContext();
         bool ShouldDrop();
         bool CanSpawn();
         void SpawnTetromino();        
         void CheckForCompletedLines(SAMPLE* points);
         void RemoveCompletedLine(int rowPosition);
-
+        void Reset();
+        
     public: //Setters
         void IncreaseCurrentLevel() { currentLevel++; SetCurrentLevelChanged(true); }
         void SetTopScore(int input) { topScore = input; SetTopScoreChanged(true); }                
@@ -41,6 +50,23 @@ class GameContext
         bool TopScoreChanged() { return topScoreChanged; }
         bool CurrentLinesChanged() { return currentLinesChanged; }
         bool TetrominoTallyChanged(int type) { return tetrominoTallyChanged[type]; }
+
+    public: //Graphics
+        BITMAP *GAMEUI;
+        FONT *GAME_FONT;
+        PALETTE palette;
+        std::vector<int> BackTileData;
+        std::vector<int> DialogTileData;
+    public: //Audio
+        MIDI *MUSIC;
+        SAMPLE* GAMEOVER;
+        SAMPLE* POINTS;
+
+    private:
+        GameContext();
+        ~GameContext() = default;
+        GameContext(const GameContext&) = delete;
+        GameContext& operator=(const GameContext&) = delete;
 
     private: //Functions
         int GetRandomTetromino();        

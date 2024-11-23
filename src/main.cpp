@@ -2,6 +2,7 @@
 #include <vector>
 #include <ctime>
 #include "GameProcessor.h"
+#include "GameContext.h"
 #include "GameState.h"
 
 volatile int ticks = 0;
@@ -15,6 +16,7 @@ int main()
 {
     GameProcessor objGame;
     objGame.InitializeGame();
+    GameContext::Instance();
 
     /* SETUP THE MAIN TIMER TO 60 FPS */
     install_timer(); //Setup the timer

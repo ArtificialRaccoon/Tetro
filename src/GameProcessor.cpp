@@ -15,6 +15,14 @@ void GameProcessor::InitializeGame()
 		allegro_message("Unable to set any graphic mode\n%s\n", allegro_error);
 		exit(0);
 	}
+
+	//Init Sound
+    reserve_voices (4, -1);    
+    if (install_sound (DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) < 0)
+    {
+        printf ("Error initializing sound card");
+        exit(0);
+    }
 }
 
 void GameProcessor::HandleEvents() { states.back()->ProcessInput(this); }

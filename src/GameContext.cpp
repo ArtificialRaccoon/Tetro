@@ -2,10 +2,47 @@
 
 GameContext::GameContext()
 {
+    //Load Audio
+    GAMEOVER = load_sample(".\\SFX\\GAMEOVER.WAV");
+    POINTS = load_sample(".\\SFX\\CLEAR.WAV");
+    MUSIC = load_midi(".\\OTHER\\TETRIS.MID");
+
+    //Load Graphics
+    GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
+    GAMEUI = load_bitmap(".\\GFX\\GAMEUI.bmp", palette); 
+
+    //Load GUI Layout
+    std::ifstream ifs(".\\GFX\\GAMEUI.jsn");
+    std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+    json::jobject guiJson = json::jobject::parse(content);  
+    BackTileData = guiJson["background"];
+    DialogTileData = guiJson["popup"];
+
     //Init Random Number Generator
     srand(static_cast<unsigned int>(time(0))); 
+    Reset();
+}
 
-    //Initialize the Play Grid
+void GameContext::Reset()
+{
+    topScore = 0;
+    currentScore = 0;        
+    currentLevel = 1;        
+    currentLines = 0;
+    historyIndex = 0;
+    dropCounter = 0;
+
+    levelChanged = true;
+    scoreChanged = true;
+    topScoreChanged = true;
+    currentLinesChanged = true; 
+
+    for(int i = 0; i < 7; i++)
+    {
+        tetrominoTally[i] = 0;
+        tetrominoTallyChanged[i] = true;
+    }
+
     for (int i = 0; i < playGridHeight; i++) 
     {
         playGrid[i] = new int[playGridWidth];

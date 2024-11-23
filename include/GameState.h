@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <algorithm>
 #include <memory>
-#include <fstream>
 #include <cmath>
 #include <cstdlib> 
 #include <ctime>
@@ -14,7 +13,6 @@
 #include "GameOverState.h"
 #include "BaseState.h"
 #include "allegro.h"
-#include "json.h"
 
 class GameState : public BaseState
 {
@@ -25,8 +23,10 @@ class GameState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
+        void Reset();
         static GameState* Instance()
         {
+            static GameState mGameState; 
             return &mGameState;
         }
 
@@ -34,24 +34,12 @@ class GameState : public BaseState
         GameState() { }
         void DrawBackground();        
         std::string formatInteger(int leadingZeros, int value);
-        GameContext context;
-
-    private: //Variables       
-        static GameState mGameState;
-        std::vector<int> tileData;                    
 
     private: //Bitmaps
         BITMAP *BUFFER;
         BITMAP *BACKGROUND;
         BITMAP *NEXTWINDOW;
         BITMAP *PLAYGRID;
-        BITMAP *GAMEUI;
-        FONT *GAME_FONT;
-        PALETTE palette;
-    
-    private: //Sound Effects
-        SAMPLE* GAMEOVER;
-        SAMPLE* POINTS;
 };
 
 #endif // GAMESTATE_H
