@@ -1,6 +1,7 @@
-tetris.mod - "Tetris mania" by Unknown (https://modarchive.org/index.php?request=view_by_moduleid&query=60656)
 tetris.mid - Arrangement by King Meteor (http://www.vgmusic.com/music/console/nintendo/gameboy/Tet_Music_A-KM.mid)
+"Tetro" Title Font by Zingot Games (nuskool_krome_64x64.png) - (https://opengameart.org/content/bitmap-font-pack)
+Saikyo Script Font - (https://opengameart.org/content/the-collection-of-8-bit-fonts-for-grafx2-r2)
 BitScript Font - (https://opengameart.org/content/new-original-grafx2-font-collection)
 Game UI by Buch/Michele Bucelli (https://opengameart.org/content/sci-fi-user-interface-elements)
-Success Sound - https://freesound.org/people/grunz/sounds/109662/
-Game Over Sound - https://freesound.org/people/SoundEffectsPodcast_com/sounds/256091/
+Success Sound - (https://freesound.org/people/grunz/sounds/109662/)
+Game Over Sound - (https://freesound.org/people/SoundEffectsPodcast_com/sounds/256091/)
