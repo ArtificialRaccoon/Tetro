@@ -102,9 +102,8 @@ void TitleState::Render(GameProcessor* game)
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
     textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, "Play Game", menuXStart, menuYStart, makecol(255, 255, 255), -1);
     textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, "Randomizer: ", menuXStart, menuYRandom, makecol(255, 255, 255), -1);
-    textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, "Exit to DOS", menuXStart, menuYExit, makecol(255, 255, 255), -1);
-    
     textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, use7Bag ? "7-Bag" : "TGM", menuXStart + textWidth, menuYRandom, use7Bag ? makecol(255, 0, 255) : makecol(255, 255, 0), -1);
+    textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, "Exit to DOS", menuXStart, menuYExit, makecol(255, 255, 255), -1);        
     
     if(selectedItem == 0)
         blit(GameContext::Instance()->GAMEUI, BUFFER, 104, 88, menuXStart - 10, menuYStart - 1, 8, 8);
