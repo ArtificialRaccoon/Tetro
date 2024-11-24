@@ -32,7 +32,7 @@ void GameState::InitState()
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
     //Play Soundtrack
-    play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 25, 100);
+    play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 0, 97);
 }
 
 void GameState::Pause()
