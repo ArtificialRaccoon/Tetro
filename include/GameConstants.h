@@ -22,5 +22,6 @@ const int menuYExit = 124;
 const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
 const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
 const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
+const char ScoreKey = 0x45; //Nice.
 
 #endif // GAMECONSTANTS_H

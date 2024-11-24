@@ -60,6 +60,8 @@ void GameContext::Reset()
 
     this->currentPiece = Tetromino(GetRandomTetromino());
     this->nextPiece = Tetromino(GetRandomTetromino());
+
+    this->LoadTopScore();
 }
 
 bool GameContext::CanSpawn()
@@ -208,4 +210,26 @@ bool GameContext::ShouldDrop()
         return true;
     }
     return false;
+}
+
+void GameContext::SaveTopScore()
+{
+    std::ofstream scoreFile("topscore.sav", std::ios::binary);
+    std::vector<char> buffer(sizeof(int) * 2);
+    memcpy(buffer.data(), &currentScore, sizeof(int));
+    memcpy(buffer.data() + sizeof(int), &currentLines, sizeof(int));  //Saving the lines for now; will use later when I add a top score screen.
+    EncodeDecodeScore(buffer, ScoreKey);
+    scoreFile.write(buffer.data(), buffer.size());
+}
+
+void GameContext::LoadTopScore()
+{
+    std::ifstream scoreFile("topscore.sav", std::ios::binary);
+    if(scoreFile.fail())
+        return;
+    
+    std::vector<char> buffer(sizeof(int) * 2);
+    scoreFile.read(buffer.data(), buffer.size());
+    EncodeDecodeScore(buffer, ScoreKey);
+    memcpy(&topScore, buffer.data(), sizeof(int));
 }

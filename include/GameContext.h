@@ -1,11 +1,13 @@
 #ifndef GAMECONTEXT_H
 #define GAMECONTEXT_H
 
+#include <string>
 #include <fstream>
 #include <vector>
 #include "json.h"
 #include "allegro.h"
 #include "Tetromino.h"
+#include "GameConstants.h"
 
 class GameContext
 {
@@ -23,7 +25,9 @@ class GameContext
         void CheckForCompletedLines(SAMPLE* points);
         void RemoveCompletedLine(int rowPosition);
         void Reset();
-        
+        void SaveTopScore();
+        void LoadTopScore();
+
     public: //Setters
         void IncreaseCurrentLevel() { currentLevel++; SetCurrentLevelChanged(true); }
         void SetTopScore(int input) { topScore = input; SetTopScoreChanged(true); }                
@@ -74,7 +78,11 @@ class GameContext
         GameContext& operator=(const GameContext&) = delete;
 
     private: //Functions
-        int GetRandomTetromino();        
+        int GetRandomTetromino(); 
+        void EncodeDecodeScore(std::vector<char>& data, char key)
+        {
+            for(char& byte : data) { byte ^= key; }
+        }
 
     private: //Context
         bool useSevenBag = true; //Later, add an option to switch randomization

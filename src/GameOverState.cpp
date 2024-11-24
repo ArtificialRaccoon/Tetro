@@ -38,6 +38,10 @@ void GameOverState::InitState()
 
         destYPos += tileHeight;
     }
+
+    //Save Top Score
+    if(GameContext::Instance()->GetTopScore() > GameContext::Instance()->GetCurrentScore())
+        GameContext::Instance()->SaveTopScore();
 }
 
 void GameOverState::Pause()
