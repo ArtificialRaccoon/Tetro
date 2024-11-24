@@ -1,5 +1,5 @@
-#ifndef GAMEOVERSTATE_H
-#define GAMEOVERSTATE_H
+#ifndef TITLESTATE_H
+#define TITLESTATE_H
 
 #include <cmath>
 #include "GameContext.h"
@@ -7,9 +7,8 @@
 #include "GameConstants.h"
 #include "BaseState.h"
 #include "GameState.h"
-#include "TitleState.h"
 
-class GameOverState : public BaseState
+class TitleState : public BaseState
 {
     public:
         void InitState();
@@ -18,19 +17,22 @@ class GameOverState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
-        static GameOverState* Instance()
+        static TitleState* Instance()
         {
-            static GameOverState mGameOverState;
-            return &mGameOverState;
+            static TitleState mTitleState;
+            return &mTitleState;
         }
 
     protected:
-        GameOverState() { } 
+        TitleState() { } 
 
     private: //Bitmaps
         BITMAP *BUFFER;
         BITMAP *BACKGROUND;
-        BITMAP *DIALOG;
+    
+    private:
+        int selectedItem = 0;
+        bool trigger = false;
 };
 
-#endif // GAMEOVERSTATE_H
+#endif // TitleState_H

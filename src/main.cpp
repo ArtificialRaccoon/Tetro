@@ -3,7 +3,7 @@
 #include <ctime>
 #include "GameProcessor.h"
 #include "GameContext.h"
-#include "GameState.h"
+#include "TitleState.h"
 
 volatile int ticks = 0;
 void timer(void)
@@ -24,7 +24,7 @@ int main()
     LOCK_FUNCTION(timer); //Set timer function
     install_int_ex(timer, BPS_TO_TIMER(60));
 
-    objGame.ChangeState(GameState::Instance());
+    objGame.ChangeState(TitleState::Instance());
     while ( true )
     {
         while(ticks == 0)

@@ -62,7 +62,7 @@ void GameOverState::AquireInput(GameProcessor* game)
                 game->ChangeState(GameState::Instance());
                 break;
             case KEY_N:
-                exit(0);
+                game->ChangeState(TitleState::Instance());
                 break;
         }
         clear_keybuf();

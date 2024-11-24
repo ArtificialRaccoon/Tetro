@@ -1,4 +1,5 @@
 tetris.mid - Arrangement by King Meteor (http://www.vgmusic.com/music/console/nintendo/gameboy/Tet_Music_A-KM.mid)
+title.mid - Arrangement by PJ Barnes (https://www.vgmusic.com/music/console/nintendo/nes/tetris-1.mid)
 "Tetro" Title Font by Zingot Games (nuskool_krome_64x64.png) - (https://opengameart.org/content/bitmap-font-pack)
 Saikyo Script Font - (https://opengameart.org/content/the-collection-of-8-bit-fonts-for-grafx2-r2)
 BitScript Font - (https://opengameart.org/content/new-original-grafx2-font-collection)

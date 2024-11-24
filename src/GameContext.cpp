@@ -5,7 +5,8 @@ GameContext::GameContext()
     //Load Audio
     GAMEOVER = load_sample(".\\SFX\\GAMEOVER.WAV");
     POINTS = load_sample(".\\SFX\\CLEAR.WAV");
-    MUSIC = load_midi(".\\OTHER\\TETRIS.MID");
+    INGAMEMUSIC = load_midi(".\\OTHER\\TETRIS.MID");
+    TITLEMUSIC = load_midi(".\\OTHER\\TITLE.MID");
 
     //Load Graphics
     GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
@@ -17,6 +18,7 @@ GameContext::GameContext()
     json::jobject guiJson = json::jobject::parse(content);  
     BackTileData = guiJson["background"];
     DialogTileData = guiJson["popup"];
+    TitleTileData = guiJson["title"];
 
     //Init Random Number Generator
     srand(static_cast<unsigned int>(time(0))); 

@@ -35,6 +35,7 @@ class GameContext
         void SetTopScoreChanged(bool input) { topScoreChanged = input; }
         void SetCurrentLinesChanged(bool input) { currentLinesChanged = input; }
         void SetTetrominoTallyChanged(int type, bool input) { tetrominoTallyChanged[type] = input; }
+        void SwapRandomizer() { useSevenBag = !useSevenBag; }
 
     public: //Getters
         int GetCurrentLevel() { return currentLevel; }
@@ -50,6 +51,7 @@ class GameContext
         bool TopScoreChanged() { return topScoreChanged; }
         bool CurrentLinesChanged() { return currentLinesChanged; }
         bool TetrominoTallyChanged(int type) { return tetrominoTallyChanged[type]; }
+        bool UseSevenBag() { return useSevenBag; }
 
     public: //Graphics
         BITMAP *GAMEUI;
@@ -57,8 +59,11 @@ class GameContext
         PALETTE palette;
         std::vector<int> BackTileData;
         std::vector<int> DialogTileData;
+        std::vector<int> TitleTileData;
+
     public: //Audio
-        MIDI *MUSIC;
+        MIDI *TITLEMUSIC;
+        MIDI *INGAMEMUSIC;
         SAMPLE* GAMEOVER;
         SAMPLE* POINTS;
 
