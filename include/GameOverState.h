@@ -18,6 +18,7 @@ class GameOverState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
+        void UnloadResources();
         static GameOverState* Instance()
         {
             static GameOverState mGameOverState;

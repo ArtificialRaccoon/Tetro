@@ -86,7 +86,11 @@ void TitleState::ProcessInput(GameProcessor* game)
     {
         trigger = false;
         if(selectedItem == 0)
+        {
+            this->UnloadResources();
+            GameState::Instance()->Reset();
             game->ChangeState(GameState::Instance());
+        }
         else if(selectedItem == 1)
             GameContext::Instance()->SwapRandomizer();
         else
@@ -115,4 +119,10 @@ void TitleState::Render(GameProcessor* game)
         blit(GameContext::Instance()->GAMEUI, BUFFER, 104, 88, menuXStart - 10, menuYExit - 1, 8, 8);
 
     draw_sprite(screen, BUFFER, 0, 0);
+}
+
+void TitleState::UnloadResources()
+{
+    destroy_bitmap(BUFFER);
+    destroy_bitmap(BACKGROUND);
 }

@@ -33,7 +33,7 @@ void GameState::InitState()
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
     //Play Soundtrack
-    //play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 0, 97);
+    play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 0, 97);
 }
 
 void GameState::Pause()
@@ -100,6 +100,7 @@ void GameState::ProcessInput(GameProcessor* game)
             // Show the player HOW they lost
             GameContext::Instance()->SpawnTetromino();
             Render(game);
+            this->UnloadResources();
             game->ChangeState(GameOverState::Instance());
         }
     }
@@ -221,4 +222,13 @@ std::string GameState::formatInteger(int leadingZeros, int value)
 void GameState::Reset()
 {
     GameContext::Instance()->Reset();
+}
+
+void GameState::UnloadResources()
+{
+    destroy_bitmap(DISPLAY);
+    destroy_bitmap(PLAYGRID);
+    destroy_bitmap(BUFFER);
+    destroy_bitmap(BACKGROUND);
+    destroy_bitmap(NEXTWINDOW);
 }

@@ -17,6 +17,7 @@ class TitleState : public BaseState
         void AquireInput(GameProcessor* game);
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
+        void UnloadResources();
         static TitleState* Instance()
         {
             static TitleState mTitleState;

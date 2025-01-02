@@ -24,6 +24,7 @@ class GameState : public BaseState
         void ProcessInput(GameProcessor* game);
         void Render(GameProcessor* game);
         void Reset();
+        void UnloadResources();
         static GameState* Instance()
         {
             static GameState mGameState; 

@@ -37,7 +37,8 @@ void GameContext::Reset()
     levelChanged = true;
     scoreChanged = true;
     topScoreChanged = true;
-    currentLinesChanged = true; 
+    currentLinesChanged = true;
+    nextPieceChanged = true;
 
     for(int i = 0; i < 7; i++)
     {

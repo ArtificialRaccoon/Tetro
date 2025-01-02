@@ -63,9 +63,11 @@ void GameOverState::AquireInput(GameProcessor* game)
         {        
             case KEY_Y:
                 GameState::Instance()->Reset();
+                this->UnloadResources();
                 game->ChangeState(GameState::Instance());
                 break;
             case KEY_N:
+                this->UnloadResources();
                 game->ChangeState(TitleState::Instance());
                 break;
         }
@@ -85,4 +87,11 @@ void GameOverState::Render(GameProcessor* game)
     textout_ex(DIALOG, GameContext::Instance()->GAME_FONT, "Y / N", 42, 18, makecol(255, 255, 255), -1);
     masked_blit(DIALOG, BUFFER, 0, 0, 120, 64, dialogWidth * 8, dialogHeight * 8);
     draw_sprite(screen, BUFFER, 0, 0);
+}
+
+void GameOverState::UnloadResources()
+{
+    destroy_bitmap(BUFFER);
+    destroy_bitmap(BACKGROUND);
+    destroy_bitmap(DIALOG);
 }
