@@ -2,10 +2,11 @@
 
 void GameState::InitState()
 {
-    BUFFER = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
+    DISPLAY = create_video_bitmap(SCREEN_W, SCREEN_H);
+    BUFFER = create_video_bitmap(SCREEN_W, SCREEN_H);
     BACKGROUND = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
     NEXTWINDOW = create_bitmap(blockSize * 4, blockSize * 4);
-    PLAYGRID = create_bitmap(blockSize * playGridWidth, blockSize * playGridHeight);
+    PLAYGRID = create_sub_bitmap(BUFFER, 136, 24, blockSize * playGridWidth, blockSize * playGridHeight);
 
     clear_to_color(BACKGROUND, makecol(0, 0, 0));
     clear_to_color(NEXTWINDOW, makecol(57,85,113));
@@ -32,7 +33,7 @@ void GameState::InitState()
     draw_sprite(BUFFER, BACKGROUND, 0, 0);
 
     //Play Soundtrack
-    play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 0, 97);
+    //play_looped_midi(GameContext::Instance()->INGAMEMUSIC, 0, 97);
 }
 
 void GameState::Pause()
@@ -53,22 +54,22 @@ void GameState::AquireInput(GameProcessor* game)
         {        
             case KEY_W:
             case KEY_UP:       
-                GameContext::Instance()->GetCurrentPiece().Rotate(GameContext::Instance()->PlayGrid());        
+                GameContext::Instance()->GetCurrentPiece().Rotate(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());        
                 break;
             case KEY_S:
             case KEY_DOWN:
-                GameContext::Instance()->GetCurrentPiece().Down(GameContext::Instance()->PlayGrid());
+                GameContext::Instance()->GetCurrentPiece().Down(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
                 break;        
             case KEY_A:
             case KEY_LEFT:       
-                GameContext::Instance()->GetCurrentPiece().Left(GameContext::Instance()->PlayGrid());
+                GameContext::Instance()->GetCurrentPiece().Left(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
                 break;
             case KEY_D:
             case KEY_RIGHT:
-                GameContext::Instance()->GetCurrentPiece().Right(GameContext::Instance()->PlayGrid());
+                GameContext::Instance()->GetCurrentPiece().Right(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
                 break;  
             case KEY_SPACE:
-                GameContext::Instance()->GetCurrentPiece().HardDrop(GameContext::Instance()->PlayGrid());
+                GameContext::Instance()->GetCurrentPiece().HardDrop(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
                 break;                                
             case KEY_ESC:
                 exit(0); //Just Exit for now, show pause state later
@@ -81,12 +82,12 @@ void GameState::AquireInput(GameProcessor* game)
 void GameState::ProcessInput(GameProcessor* game)
 { 
     if (GameContext::Instance()->ShouldDrop())
-        GameContext::Instance()->GetCurrentPiece().Down(GameContext::Instance()->PlayGrid());
+        GameContext::Instance()->GetCurrentPiece().Down(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
 
     if (GameContext::Instance()->GetCurrentPiece().CanLock(GameContext::Instance()->PlayGrid())) 
     {
         GameContext::Instance()->IncreaseTetrominoTally(GameContext::Instance()->GetCurrentPiece().GetType());
-        GameContext::Instance()->GetCurrentPiece().LockPiece(GameContext::Instance()->PlayGrid());
+        GameContext::Instance()->GetCurrentPiece().LockPiece(GameContext::Instance()->PlayGrid(), GameContext::Instance()->ChangedGrid());
         GameContext::Instance()->CheckForCompletedLines(GameContext::Instance()->POINTS);
         
         if (GameContext::Instance()->CanSpawn())
@@ -145,28 +146,33 @@ void GameState::Render(GameProcessor* game)
     }
 
     //Draw Next Piece
-    clear_to_color(NEXTWINDOW, makecol(57,85,113));
-    GameContext::Instance()->GetNextPiece().Draw(NEXTWINDOW, GameContext::Instance()->GAMEUI, true);
-    blit(NEXTWINDOW, BUFFER, 0, 0, 272, 48, blockSize * 4, blockSize * 4);
+    if(GameContext::Instance()->NextPieceChanged())
+    {
+        clear_to_color(NEXTWINDOW, makecol(57,85,113));
+        GameContext::Instance()->GetNextPiece().Draw(NEXTWINDOW, GameContext::Instance()->GAMEUI, true);
+        blit(NEXTWINDOW, BUFFER, 0, 0, 272, 48, blockSize * 4, blockSize * 4);
+        GameContext::Instance()->SetNextPieceChanged(false);
+    }
 
     //Draw Play Grid
-    clear_to_color(PLAYGRID, makecol(0, 0, 0));
     for (int y = 0; y < playGridHeight; y++) 
     {
         for (int x = 0; x < playGridWidth; x++) 
         {
-            if (GameContext::Instance()->PlayGrid()[y][x] > 0)
-                blit(GameContext::Instance()->GAMEUI, PLAYGRID, 72 + ((GameContext::Instance()->PlayGrid()[y][x] - 1) * 8), 56, x * blockSize, y * blockSize, blockSize * 4, blockSize * 4);
-            else
-                blit(GameContext::Instance()->GAMEUI, PLAYGRID, 120, 0, x * blockSize, y * blockSize, blockSize * 4, blockSize * 4);
+            if (GameContext::Instance()->ChangedGrid()[y][x] == true)
+            {
+                if (GameContext::Instance()->PlayGrid()[y][x] > 0)
+                    blit(GameContext::Instance()->GAMEUI, PLAYGRID, 72 + ((GameContext::Instance()->PlayGrid()[y][x] - 1) * 8), 56, x * blockSize, y * blockSize, blockSize, blockSize);
+                else
+                    blit(GameContext::Instance()->GAMEUI, PLAYGRID, 120, 0, x * blockSize, y * blockSize, blockSize, blockSize);
+                GameContext::Instance()->ChangedGrid()[y][x] = false;
+            }
         }
     }    
 
     //Draw Current Piece
     GameContext::Instance()->GetCurrentPiece().Draw(PLAYGRID, GameContext::Instance()->GAMEUI, 0);
-    blit(PLAYGRID, BUFFER, 0, 0, 136, 24, blockSize * playGridWidth, blockSize * playGridHeight);
-
-    draw_sprite(screen, BUFFER, 0, 0);
+    blit(BUFFER, DISPLAY, 0, 0, 0, 0, 320, 200);
 }
 
 void GameState::DrawBackground()

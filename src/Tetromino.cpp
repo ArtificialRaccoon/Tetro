@@ -23,10 +23,8 @@ void Tetromino::Draw(BITMAP* BUFFER, BITMAP* TILESET, bool preview)
     {
         for (int j = 0; j < 4; j++) 
         {
-            if (this->shape[rotation] & (0x8000 >> (i * 4 + j))) 
-            {
-                DrawBlock(BUFFER, TILESET, xPos + j, this->y + i);                
-            }
+            if (this->shape[rotation] & (0x8000 >> (i * 4 + j)))
+                DrawBlock(BUFFER, TILESET, xPos + j, this->y + i);             
         }
     }
 }
@@ -50,7 +48,7 @@ bool Tetromino::CanMove(int** playGrid, int newX, int newY)
             if (finalX < 0 || finalX >= playGridWidth || finalY < 0 || finalY >= playGridHeight)
                 return false;
 
-            if (playGrid[finalY][finalX] != 0)
+            if (playGrid[finalY][finalX] > 0)
                 return false;
         }
     }
@@ -71,14 +69,14 @@ bool Tetromino::CanRotate(int** playGrid, int nextRotation)
             if (finalX < 0 || finalX >= playGridWidth || finalY < 0 || finalY >= playGridHeight)
                 return false;
 
-            if (playGrid[finalY][finalX] != 0)
+            if (playGrid[finalY][finalX] > 0)
                 return false;
         }
     }
     return true;
 }
 
-void Tetromino::LockPiece(int** playGrid)
+void Tetromino::LockPiece(int** playGrid, bool** changedGrid)
 {
     for (int i = 0; i < 16; i++)
     {
@@ -93,7 +91,26 @@ void Tetromino::LockPiece(int** playGrid)
                 playGrid[finalY][finalX] = this->Type + 1;
         }
     }
+
+    BlankoutPiece(changedGrid);
     lockTimer = 0;
+}
+
+void Tetromino::BlankoutPiece(bool** changedGrid)
+{
+    for (int i = 0; i < 16; i++)
+    {
+        if (this->shape[rotation] & (0x8000 >> i)) 
+        {
+            int localX = i % 4;
+            int localY = i / 4;
+            int finalX = this->x + localX;
+            int finalY = this->y + localY;
+
+            if (finalX >= 0 && finalX < playGridWidth && finalY >= 0 && finalY < playGridHeight)
+                changedGrid[finalY][finalX] = true;            
+        }
+    }
 }
 
 bool Tetromino::CanSpawn(int** playGrid)
@@ -107,7 +124,7 @@ bool Tetromino::CanSpawn(int** playGrid)
             int finalX = this->x + localX;
             int finalY = this->y + localY;
 
-            if (playGrid[finalY][finalX] != 0) 
+            if (playGrid[finalY][finalX] > 0) 
                 return false;
         }
     }

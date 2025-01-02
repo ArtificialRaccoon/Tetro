@@ -36,10 +36,11 @@ class GameState : public BaseState
         std::string formatInteger(int leadingZeros, int value);
 
     private: //Bitmaps
+        BITMAP *DISPLAY;
         BITMAP *BUFFER;
         BITMAP *BACKGROUND;
         BITMAP *NEXTWINDOW;
-        BITMAP *PLAYGRID;
+        BITMAP *PLAYGRID;      
 };
 
 #endif // GAMESTATE_H

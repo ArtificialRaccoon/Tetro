@@ -11,7 +11,7 @@ GameContext::GameContext()
     //Load Graphics
     GAME_FONT = load_font(".\\OTHER\\DEFAULT.bmp", palette, NULL);
     GAMEUI = load_bitmap(".\\GFX\\GAMEUI.bmp", palette); 
-
+    
     //Load GUI Layout
     std::ifstream ifs(".\\GFX\\GAMEUI.jsn");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
@@ -48,6 +48,7 @@ void GameContext::Reset()
     for (int i = 0; i < playGridHeight; i++) 
     {
         playGrid[i] = new int[playGridWidth];
+        changedGrid[i] = new bool[playGridWidth];
     }
 
     for (int i = 0; i < playGridHeight; i++) 
@@ -55,6 +56,7 @@ void GameContext::Reset()
         for (int j = 0; j < playGridWidth; j++) 
         {
             playGrid[i][j] = 0;
+            changedGrid[i][j] = true;
         }
     }
 
@@ -74,6 +76,7 @@ void GameContext::SpawnTetromino()
     this->dropCounter = 0;
     currentPiece = Tetromino(nextPiece.GetType());
     nextPiece = Tetromino(GetRandomTetromino());
+    SetNextPieceChanged(true);
 }
 
 int GameContext::GetRandomTetromino()
@@ -190,6 +193,12 @@ void GameContext::RemoveCompletedLine(int rowPosition)
     {
         for (int x = 0; x < playGridWidth; x++) 
         {
+            if(playGrid[y][x] != playGrid[y - 1][x])
+            {
+                changedGrid[y][x] = true;
+                changedGrid[y - 1][x] = true;
+            }
+
             playGrid[y][x] = playGrid[y - 1][x];
         }
     }
@@ -197,6 +206,7 @@ void GameContext::RemoveCompletedLine(int rowPosition)
     for (int x = 0; x < playGridWidth; x++) 
     {
         playGrid[0][x] = 0;
+        changedGrid[0][x] = true;
     }
 }
 

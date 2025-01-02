@@ -10,48 +10,54 @@ class Tetromino
         Tetromino() {};
         Tetromino(int type);        
         void Draw(BITMAP* BUFFER, BITMAP* tileset, bool preview = false);
-        void LockPiece(int** playGrid);
+        void LockPiece(int** playGrid, bool** changedGrid);
+        void BlankoutPiece(bool** changedGrid);
         bool CanSpawn(int** playGrid);
         bool CanLock(int** playGrid); 
 
     public: //Movement Handlers
-        void Left(int** playGrid) 
+        void Left(int** playGrid, bool** changedGrid) 
         {
             if(CanMove(playGrid, x - 1, y))
             {
-                x--; 
+                BlankoutPiece(changedGrid);
+                x--;
                 ResetTimer();
             }
         }
 
-        void Right(int** playGrid)
+        void Right(int** playGrid, bool** changedGrid)
         {
             if(CanMove(playGrid, x + 1, y))
             {
+                BlankoutPiece(changedGrid);
                 x++; 
                 ResetTimer();
             }
         }
 
-        void Down(int** playGrid)
+        void Down(int** playGrid, bool** changedGrid)
         {
             if (CanMove(playGrid, x, y + 1))
             {
+                BlankoutPiece(changedGrid);
                 y++;
                 ResetTimer();
             }
         }
 
-        void HardDrop(int** playGrid)
+        void HardDrop(int** playGrid, bool** changedGrid)
         {
+            BlankoutPiece(changedGrid);
             while (CanMove(playGrid, x, y + 1)) { y++; }
             lockTimer = lockTimerMax;
         }
 
-        void Rotate(int** playGrid)
+        void Rotate(int** playGrid, bool** changedGrid)
         {
             if(CanRotate(playGrid, (rotation + 1) % 4))
             {
+                BlankoutPiece(changedGrid);
                 rotation = (rotation + 1) % 4; 
                 ResetTimer();
             }

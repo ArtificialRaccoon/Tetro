@@ -6,8 +6,8 @@
                      \/                    \/         \/ 
 ------------------------------------------------------------
 
-Tetro 1.0 by Bernard Walker
-November 24th, 2024
+Tetro 1.1 by Bernard Walker
+January 1st, 2025
 
 Please see attribution.txt for music, sound, and graphic
 credits.  
@@ -17,6 +17,12 @@ Dead by Daylight, and when I had nothing better to do.
 
 It is released free of charge, under the GPL 3.0 license. 
 
+------------------------------------------------------------
+Version History
+------------------------------------------------------------
+
+1.1 - Rendering function optimization (true 60FPS)
+1.0 - Initial Release
 
 ------------------------------------------------------------
 Requirements
@@ -51,6 +57,9 @@ Special Thanks / Dedications
 A special thanks to my partner Jo, who demanded that I add
 TGM style bag randomization.  In memory of Smokey and Lucy;
 two cats who kept us sane over the years.
+
+Special Thanks to Steve Shepherd, who discovered the game
+was running slow.
 
 ------------------------------------------------------------
 Frequently Asked Questions

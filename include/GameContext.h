@@ -38,6 +38,7 @@ class GameContext
         void SetCurrentScoreChanged(bool input) { scoreChanged = input; }
         void SetTopScoreChanged(bool input) { topScoreChanged = input; }
         void SetCurrentLinesChanged(bool input) { currentLinesChanged = input; }
+        void SetNextPieceChanged(bool input) { nextPieceChanged = input; }
         void SetTetrominoTallyChanged(int type, bool input) { tetrominoTallyChanged[type] = input; }
         void SwapRandomizer() { useSevenBag = !useSevenBag; }
 
@@ -50,10 +51,12 @@ class GameContext
         Tetromino& GetCurrentPiece() { return currentPiece; }
         Tetromino& GetNextPiece() { return nextPiece; }
         int** PlayGrid() { return playGrid; }
+        bool** ChangedGrid() { return changedGrid; }
         bool CurrentLevelChanged() { return levelChanged; }
         bool CurrentScoreChanged() { return scoreChanged; }
         bool TopScoreChanged() { return topScoreChanged; }
         bool CurrentLinesChanged() { return currentLinesChanged; }
+        bool NextPieceChanged() { return nextPieceChanged; }
         bool TetrominoTallyChanged(int type) { return tetrominoTallyChanged[type]; }
         bool UseSevenBag() { return useSevenBag; }
 
@@ -94,6 +97,7 @@ class GameContext
         int dropCounter = 0;
         int tetrominoTally[7] = {0,0,0,0,0,0,0};
         int** playGrid = new int*[playGridHeight];
+        bool** changedGrid = new bool*[playGridHeight];
         Tetromino nextPiece;
         Tetromino currentPiece;        
         std::vector<int> sevenBag = {0, 1, 2, 3, 4, 5, 6};
@@ -104,6 +108,7 @@ class GameContext
         bool scoreChanged = true;
         bool topScoreChanged = true;
         bool currentLinesChanged = true;
+        bool nextPieceChanged = true;
         bool tetrominoTallyChanged[7] = {true,true,true,true,true,true,true};  
 };
 
