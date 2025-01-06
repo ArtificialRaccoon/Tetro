@@ -130,7 +130,7 @@ void GameState::Render(GameProcessor* game)
     //Current Level   
     if(GameContext::Instance()->CurrentLevelChanged())
     {
-        rectfill(BUFFER, 303, 12, 312, 20, makecol(101,101,101));
+        rectfill(BUFFER, 303, 12, 313, 20, makecol(101,101,101));
         textout_ex(BUFFER, GameContext::Instance()->GAME_FONT, formatInteger(2, GameContext::Instance()->GetCurrentLevel()).c_str(), 303, 12, makecol(255, 255, 255), -1);
         GameContext::Instance()->SetCurrentLevelChanged(false);
     }
