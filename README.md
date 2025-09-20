@@ -14,6 +14,8 @@ sound cardis recommended.
 Tetro has been tested on an AMD 386DX40, though it should run on lower clocked 
 machines without issue.  
 
+Check out my [Game Boy Advance Port](https://github.com/ArtificialRaccoon/Tetro-Advance)!
+
 Tooling:
 - DJGPP (targetting GCC 12.1.0)
 - Allegro 4.2.3.1 (Unoffical, see below)
